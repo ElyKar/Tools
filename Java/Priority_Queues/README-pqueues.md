@@ -13,7 +13,7 @@ Here are the functions provided.
 -	Key minKey()
 -	Key delMin()
 -	Iterator<Key> iterator()
--	*MinPQ<Key> union(*MinPQ<Key> that) (only for Binomial and Fibonacci)
+-	\*MinPQ<Key> union(\*MinPQ<Key> that) (only for Binomial and Fibonacci)
 
 # IndexBinomialMinPQ<Key>, IndexMultiwayMinPQ<Key>, IndexFibonacciMinPQ<Key>
 
@@ -29,4 +29,4 @@ Here are the functions provided.
 -	void decreaseKey(int i, Key key)
 -	void increaseKey(int i, Key key)
 -	void delete(int i)
--	Iterator<Integer> iterator()-
+-	Iterator<Integer> iterator()
