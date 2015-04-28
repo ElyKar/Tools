@@ -7,26 +7,26 @@ Here are the functions provided.
 
 # BinomialMinPQ<Key>, MultiwayMinPQ<Key>, FibonacciMinPQ<Key>
 
--boolean isEmpty()
--int size()
--void insert(Key key)
--Key minKey()
--Key delMin()
--Iterator<Key> iterator()
--*MinPQ<Key> union(*MinPQ<Key> that) (only for Binomial and Fibonacci)
+-	boolean isEmpty()
+-	int size()
+-	void insert(Key key)
+-	Key minKey()
+-	Key delMin()
+-	Iterator<Key> iterator()
+-	*MinPQ<Key> union(*MinPQ<Key> that) (only for Binomial and Fibonacci)
 
 # IndexBinomialMinPQ<Key>, IndexMultiwayMinPQ<Key>, IndexFibonacciMinPQ<Key>
 
--boolean isEmpty()
--boolean contains(int i)
--long size()
--void insert(int i, Key key)
--int minIndex()
--Key minKey()
--int delMin()
--Key keyOf(int i)
--void changeKey(int i, Key key)
--void decreaseKey(int i, Key key)
--void increaseKey(int i, Key key)
--void delete(int i)
--Iterator<Integer> iterator()-
+-	boolean isEmpty()
+-	boolean contains(int i)
+-	long size()
+-	void insert(int i, Key key)
+-	int minIndex()
+-	Key minKey()
+-	int delMin()
+-	Key keyOf(int i)
+-	void changeKey(int i, Key key)
+-	void decreaseKey(int i, Key key)
+-	void increaseKey(int i, Key key)
+-	void delete(int i)
+-	Iterator<Integer> iterator()-
