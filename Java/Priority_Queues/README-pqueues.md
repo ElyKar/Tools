@@ -5,7 +5,7 @@ as both of them rely on such data structures.
 Here are the functions provided.
 (For the worst-case running time, please refer to the source code directly.)
 
-# BinomialMinPQ<Key>, MultiwayMinPQ<Key>, FibonacciMinPQ<Key>
+# BinaryMinPQ<Key>, BinomialMinPQ<Key>, MultiwayMinPQ<Key>, FibonacciMinPQ<Key>
 
 -	boolean isEmpty()
 -	int size()
@@ -15,7 +15,7 @@ Here are the functions provided.
 -	Iterator<Key> iterator()
 -	\*MinPQ<Key> union(\*MinPQ<Key> that) (only for Binomial and Fibonacci)
 
-# IndexBinomialMinPQ<Key>, IndexMultiwayMinPQ<Key>, IndexFibonacciMinPQ<Key>
+# IndexBinaryMinPQ<Key>, IndexBinomialMinPQ<Key>, IndexMultiwayMinPQ<Key>, IndexFibonacciMinPQ<Key>
 
 -	boolean isEmpty()
 -	boolean contains(int i)
