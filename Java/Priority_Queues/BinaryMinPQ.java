@@ -23,12 +23,13 @@ import java.util.NoSuchElementException;
  */
 @SuppressWarnings("unchecked")
 public class BinMinPQ<Key> implements Iterable<Key> {
-	private int N;							// Number of elements currently on the queue
+	private int size;							// Number of elements currently on the queue
 	private Key[] pq;						// Array storing the Priority Queue
 	private final Comparator<Key> comp;		// A Comparator over the keys
 	
 	/**
 	 * Constructs an empty Priority Queue
+	 * Worst case is O(1)
 	 */
 	public BinMinPQ() {
 		pq = (Key[]) new Object[2];
@@ -37,6 +38,7 @@ public class BinMinPQ<Key> implements Iterable<Key> {
 	
 	/**
 	 * Constructs an empty Priority Queue with the given Comparator
+	 * Worst case is O(1)
 	 * 
 	 * @param C a Comparator over the keys
 	 */
@@ -47,51 +49,56 @@ public class BinMinPQ<Key> implements Iterable<Key> {
 	
 	/**
 	 * Initializes a Priority Queue with the specified array
+	 * Worst case is O(n)
 	 * 
 	 * @param a an array of Keys
 	 */
 	public BinMinPQ(Key[] a) {
-		N = a.length;
+		size = a.length;
 		comp = new MyComparator();
-		pq = (Key[]) new Object[N+1];
-		for(int i = 0; i < N; pq[i+1] = a[i++]);
-		for(int i = N>>1; i > 0; sink(i--));
+		pq = (Key[]) new Object[size+1];
+		for(int i = 0; i < size; pq[i+1] = a[i++]);
+		for(int i = size>>1; i > 0; sink(i--));
 	}
 	
 	/**
 	 * Initializes a Priority Queue with the specified array and a Comparator
+	 * Worst case is O(n)
 	 * 
 	 * @param C a Comparator over the keys
 	 * @param a an array of Keys
 	 */
 	public BinMinPQ(Comparator<Key> C, Key[] a) {
-		N = a.length;
+		size = a.length;
 		comp = C;
-		pq = (Key[]) new Object[N+1];
-		for(int i = 0; i < N; pq[i+1] = a[i++]);
-		for(int i = N>>1; i > 0; sink(i--));
+		pq = (Key[]) new Object[size+1];
+		for(int i = 0; i < size; pq[i+1] = a[i++]);
+		for(int i = size>>1; i > 0; sink(i--));
 	}
 	
 	/**
      * Is the priority queue empty?
+     * Worst case is O(1)
      * 
      * @return true if the priority queue is empty; false otherwise
      */
 	public boolean isEmpty() {
-		return N==0;
+		return size==0;
 	}
 	
 	/**
      * Returns the number of keys on the priority queue.
+     * Worst case is O(1)
      * 
      * @return the number of keys on the priority queue
      */
 	public int size() {
-		return N;
+		return size;
 	}
 	
 	/**
      * Returns a smallest key on the priority queue.
+     * Worst case is O(1)
      * 
      * @return a smallest key on the priority queue
      * 
@@ -104,6 +111,7 @@ public class BinMinPQ<Key> implements Iterable<Key> {
 	
 	/**
      * Adds a new key to the priority queue.
+     * Worst case is O(log(n))
      * 
      * @param key the key to add to the priority queue
      * 
@@ -111,13 +119,14 @@ public class BinMinPQ<Key> implements Iterable<Key> {
      */
 	public void insert(Key key) {
 		if (key == null) throw new IllegalArgumentException("Can't insert a null key");
-		if (N+1 == pq.length) resize(N<<1);
-		pq[++N] = key;
-		swim(N);
+		if (size+1 == pq.length) resize(size<<1);
+		pq[++size] = key;
+		swim(size);
 	}
 	
 	/**
      * Removes and returns a smallest key on the priority queue.
+     * Worst case is O(log(n))
      * 
      * @return the smallest key on the priority queue
      * 
@@ -126,11 +135,11 @@ public class BinMinPQ<Key> implements Iterable<Key> {
 	public Key delMin() {
 		if (isEmpty()) throw new NoSuchElementException("Priority Queue is empty");
 		Key k = pq[1];
-		pq[1] = pq[N];
-		pq[N--] = null;
+		pq[1] = pq[size];
+		pq[size--] = null;
 		int leaf = sinkAll(1);
 		swim(leaf);
-		if (N == (pq.length-1)>>2 && N != 0) resize(N<<1);
+		if (size == (pq.length-1)>>2 && size != 0) resize(size<<1);
 		return k;
 	}
 	
@@ -163,9 +172,9 @@ public class BinMinPQ<Key> implements Iterable<Key> {
 	private void sink(int i) {
 		int j = i;
 		Key k = pq[i];
-		while(i <= N>>1) {
+		while(i <= size>>1) {
 			j = i<<1;
-			if (j < N && greater(j, j+1)) j++;
+			if (j < size && greater(j, j+1)) j++;
 			if (comp.compare(pq[j], k) > 0) break;
 			pq[i] = pq[j];
 			i = j;
@@ -177,7 +186,7 @@ public class BinMinPQ<Key> implements Iterable<Key> {
 	private int sinkAll(int i) {
 		int j;
 		Key k = pq[i];
-		while(i <= N>>1) {
+		while(i <= size>>1) {
 			j = i<<1;
 			if (greater(j, j+1)) j++;
 			pq[i] = pq[j];
@@ -194,7 +203,7 @@ public class BinMinPQ<Key> implements Iterable<Key> {
 	//Resizes the array to the specified capacity
 	private void resize(int n) {
 		Key[] array = (Key[]) new Object[n+1];
-		for(int i = 1; i <= N; array[i] = pq[i++]);
+		for(int i = 1; i <= size; array[i] = pq[i++]);
 		pq = array;
 	}
 	
@@ -222,9 +231,9 @@ public class BinMinPQ<Key> implements Iterable<Key> {
 		
 		public MyIterator() {
 			copy = new BinMinPQ<>(comp);
-			Key[] array = (Key[]) new Object[N+1];
-			for (int i = 1; i <= N; array[i] = pq[i++]);
-			copy.N = N;
+			Key[] array = (Key[]) new Object[size+1];
+			for (int i = 1; i <= size; array[i] = pq[i++]);
+			copy.size = size;
 			copy.pq = array;
 		}
 		
