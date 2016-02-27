@@ -7,6 +7,11 @@ require_relative('linked_queue')
 # Author:: Tristan Claverie
 # License:: MIT
 class LinkedDeque
+    include Enumerable
+
+    def each(&block)
+
+    end
 
     # Initialize an empty deque
     def initialize

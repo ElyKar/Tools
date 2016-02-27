@@ -21,6 +21,7 @@ end
 # Author:: Tristan Claverie
 # License:: MIT License
 class LinkedBag
+    include Enumerable
 
     # Initialize an empty bag
     def initialize

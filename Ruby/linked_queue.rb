@@ -26,6 +26,7 @@ end
 # Author:: Tristan Claverie
 # License:: MIT
 class LinkedQueue
+    include Enumerable
 
     # Initialize an empty queue
     def initialize

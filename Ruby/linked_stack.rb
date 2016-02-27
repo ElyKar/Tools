@@ -7,7 +7,8 @@ require_relative('linked_bag')
 # Author:: Tristan Claverie
 # License:: MIT
 class LinkedStack
-
+    include Enumerable
+    
     # Initialize an empty stack
     def initialize
         @size = 0
