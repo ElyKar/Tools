@@ -9,10 +9,6 @@ require_relative('linked_queue')
 class LinkedDeque
     include Enumerable
 
-    def each(&block)
-
-    end
-
     # Initialize an empty deque
     def initialize
         @size = 0
