@@ -4,6 +4,11 @@
 # Author:: Tristan Claverie
 # License:: MIT
 class ArrayBag
+    include Enumerable
+
+    def each(&block)
+
+    end
 
     # Initialize an empty bag
     def initialize
