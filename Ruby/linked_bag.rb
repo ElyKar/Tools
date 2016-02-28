@@ -16,7 +16,8 @@ class SingleNode
 end
 
 # The LinkedBag represents a one-way linked list.
-# It supports the usual add and each operation
+# 
+# It supports the usual add and each operation.
 #
 # Author:: Tristan Claverie
 # License:: MIT License

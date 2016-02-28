@@ -1,6 +1,8 @@
-# Implements a stack using an array
-# It supports the usual push and pop operations
-# The iteration is done in lifo order : last inserted is the first retrieved
+# Implements a stack using an array.
+#
+# It supports the usual push and pop operations.
+#
+# The iteration is done in lifo order : last inserted is the first retrieved.
 #
 # Author:: Tristan Claverie
 # License:: MIT

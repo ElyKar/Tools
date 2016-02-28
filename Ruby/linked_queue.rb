@@ -1,5 +1,6 @@
-# The DoubleNode class represents a doubly linked node
-# It holds one link for the previous Node and one for the next
+# The DoubleNode class represents a doubly linked node.
+#
+# It holds one link for the previous Node and one for the next.
 #
 # Author:: Tristan Claverie
 # License:: MIT
@@ -19,9 +20,11 @@ class DoubleNode
     end
 end
 
-# The LinkedQueue class represents a Queue using a Linked List
-# It supports the enqueue and dequeue operations
-# Iteration is done in fifo order : first inserted is the first retrieved
+# The LinkedQueue class represents a Queue using a Linked List.
+#
+# It supports the enqueue and dequeue operations.
+# 
+# Iteration is done in fifo order : first inserted is the first retrieved.
 #
 # Author:: Tristan Claverie
 # License:: MIT

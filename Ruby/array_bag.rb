@@ -1,5 +1,6 @@
-# Implementation of a bag using an array
-# It supports the usual add and each operation
+# Implementation of a bag using an array.
+#
+# It supports the usual add and each operations.
 #
 # Author:: Tristan Claverie
 # License:: MIT

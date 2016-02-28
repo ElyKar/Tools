@@ -1,8 +1,10 @@
 require_relative('linked_queue')
 
-# LinkedDeque represents a dequeue using a doubly-linked list
-# it supports the addFirst, addLast, removeFirst, and removeLast operations
-# Iteration via each is done from first element to the last
+# LinkedDeque represents a dequeue using a doubly-linked list.
+#
+# It supports the addFirst, addLast, removeFirst, and removeLast operations.
+#
+# Iteration via each is done from first element to the last.
 #
 # Author:: Tristan Claverie
 # License:: MIT

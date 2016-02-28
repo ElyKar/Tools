@@ -1,6 +1,8 @@
-# The ArrayQueue class represents a Queue using an array
-# It supports the enqueue and dequeue operations
-# Iteration is done in fifo order : first inserted is the first retrieved
+# The ArrayQueue class represents a Queue using an array.
+#
+# It supports the enqueue and dequeue operations.
+# 
+# Iteration is done in fifo order : first inserted is the first retrieved.
 #
 # Author:: Tristan Claverie
 # License:: MIT

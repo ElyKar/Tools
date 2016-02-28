@@ -1,8 +1,10 @@
 require_relative('linked_bag')
 
-# The LinkedStack represents a simple stack using a Linked List
-# It supports the push and pop operations
-# The iteration is done in lifo order : last inserted is the first retrieved
+# The LinkedStack represents a simple stack using a Linked List.
+#
+# It supports the push and pop operations.
+# 
+# The iteration is done in lifo order : last inserted is the first retrieved.
 #
 # Author:: Tristan Claverie
 # License:: MIT

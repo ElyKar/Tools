@@ -1,8 +1,10 @@
 require_relative('linked_queue')
 
-# LinkedRing represents a cirular linked list
-# It supports the insertion, deletion and movement in the list
-# The iteration is done in arbitrary order
+# LinkedRing represents a cirular linked list.
+#
+# It supports the insertion, deletion and movement in the list.
+# 
+# The iteration is done in arbitrary order.
 #
 # Author:: Tristan Claverie
 # License:: MIT

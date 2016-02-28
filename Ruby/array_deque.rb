@@ -1,6 +1,8 @@
-# ArrayDeque represents a dequeue using an array
-# it supports the addFirst, addLast, removeFirst, and removeLast operations
-# Iteration via each is done from first element to the last
+# ArrayDeque represents a dequeue using an array.
+# 
+# It supports the addFirst, addLast, removeFirst, and removeLast operations.
+#
+# Iteration via each is done from first element to the last.
 #
 # Author:: Tristan Claverie
 # License:: MIT
