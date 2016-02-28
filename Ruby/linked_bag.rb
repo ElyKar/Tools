@@ -23,6 +23,9 @@ end
 class LinkedBag
     include Enumerable
 
+    # Size of the bag
+    attr_reader :size
+
     # Initialize an empty bag
     def initialize
         @size = 0
@@ -32,11 +35,6 @@ class LinkedBag
     # Is the bag empty ?
     def empty?
         @size == 0
-    end
-
-    # Number of elements in the bag
-    def size?
-        @size
     end
 
     # Add value to the bag

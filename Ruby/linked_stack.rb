@@ -8,7 +8,10 @@ require_relative('linked_bag')
 # License:: MIT
 class LinkedStack
     include Enumerable
-    
+
+    # Size of the stack
+    attr_reader :size
+
     # Initialize an empty stack
     def initialize
         @size = 0
@@ -39,11 +42,6 @@ class LinkedStack
     # Is the stack empty ?
     def empty?
         @size == 0
-    end
-
-    # Size of the stack
-    def size?
-        @size
     end
 
     # Make the stack iterable in lifo order

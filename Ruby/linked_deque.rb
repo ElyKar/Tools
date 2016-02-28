@@ -9,6 +9,9 @@ require_relative('linked_queue')
 class LinkedDeque
     include Enumerable
 
+    # Size of the deque
+    attr_reader :size
+
     # Initialize an empty deque
     def initialize
         @size = 0
@@ -85,11 +88,6 @@ class LinkedDeque
     # Is the deque empty ?
     def empty?
         @size == 0
-    end
-
-    # Size of the deque
-    def size?
-        @size
     end
 
     # Iterate through the elements from first to last

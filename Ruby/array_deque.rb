@@ -52,8 +52,8 @@ class ArrayDeque
     end
 
     # Size of the deque
-    def size?
-        @size
+    def size
+        @elements.length
     end
 
     # Iterate through the elements from first to last

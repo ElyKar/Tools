@@ -13,7 +13,7 @@ class ArrayStack
     end
 
     # Sive of the stack
-    def size?
+    def size
         @elements.length
     end
 

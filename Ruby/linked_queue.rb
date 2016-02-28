@@ -28,6 +28,9 @@ end
 class LinkedQueue
     include Enumerable
 
+    # Size of queue
+    attr_reader :size
+
     # Initialize an empty queue
     def initialize
         @head = nil
@@ -82,10 +85,5 @@ class LinkedQueue
     # Is the queue empty ?
     def empty?
         @size == 0
-    end
-
-    # Size of the queue
-    def size?
-        @size
     end
 end

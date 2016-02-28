@@ -12,8 +12,8 @@ class ArrayBag
     end
 
     # Size of the bag
-    def size?
-        @elements.size
+    def size
+        @elements.length
     end
 
     # Is the bag empty ?

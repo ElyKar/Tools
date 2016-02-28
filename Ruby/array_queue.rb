@@ -41,7 +41,7 @@ class ArrayQueue
     end
 
     # Size of the queue
-    def size?
+    def size
         @elements.length
     end
 end

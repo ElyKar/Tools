@@ -9,6 +9,9 @@ require_relative('linked_queue')
 class LinkedRing
     include Enumerable
 
+    # Size of the ring
+    attr_reader :size
+
     # initialize an empty ring
     def initialize
         @current = nil
@@ -86,11 +89,6 @@ class LinkedRing
     # Is the ring empty ?
     def empty?
         @size == 0
-    end
-
-    # Size of the ring
-    def size?
-        @size
     end
 
     # Iterates through the ring
