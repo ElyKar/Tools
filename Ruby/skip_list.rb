@@ -35,14 +35,13 @@ class SkipList
     def initialize(max = 16)
         raise 'Invalid max height, must be between 1 and 32 inclusive' if max < 1 or max > 32
         @MAX_HEIGHT = max
-        @MAX_RND = (1 << max) - 1
+        @MAX_RND = (1 << (max - 1)) - 1
         @rnd = Random.new
         @head = nil
-        @height = 0
     end
 
     # Get a random height between 1 and current height + 1
-    def rand_height
+    def rand_height(max)
         bits = rand(@MAX_RND)
         height = 1
         bits.upto(@height) do |b|
@@ -52,10 +51,18 @@ class SkipList
                 break
             end
         end
-        return height
+        return height < max ? height : max
     end
 
     def find(value)
+        current = @head
+        for i in (@head.height-1)..0
+            while current.next[i] != nil && v > current.next[i].value
+                current = current.next[i]
+            end
+        end
+        return current.next[0] if current.next[0]
+        return nil
     end
 
 
