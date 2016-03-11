@@ -37,23 +37,24 @@ class SkipList
         @MAX_HEIGHT = max
         @MAX_RND = (1 << (max - 1)) - 1
         @rnd = Random.new
-        @head = nil
+        @head = SkipNode.new(nil, 0, Array.new(@MAX_HEIGHT))
     end
 
     # Get a random height between 1 and current height + 1
     def rand_height(max)
         bits = rand(@MAX_RND)
         height = 1
-        bits.upto(@height) do |b|
+        bits.upto(max) do |b|
             if b == 1 then
                 height += 1
             else
                 break
             end
         end
-        return height < max ? height : max
+        return height < @MAX_HEIGHT ? height : @MAX_HEIGHT
     end
 
+    # Find a value and returns the previous node
     def find(value)
         current = @head
         for i in (@head.height-1)..0
@@ -65,5 +66,15 @@ class SkipList
         return nil
     end
 
+    def insert(value)
+        current = @head
+        for i in (@head.height-1)..0
+            while current.next[i] != nil && v > current.next[i].value
+                current = current.next[i]
+            end
+        end
+        return current.next[0] if current.next[0]
+        return nil
+    end
 
 end
