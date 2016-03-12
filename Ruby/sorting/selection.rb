@@ -16,10 +16,10 @@ class Selection
 
     # Sort the array by modifying it
     def self.sort!(a)
-        for i in 0..a.size-1
+        (0..a.size-1).each do |i|
             min_idx = i
             min_elt = a[i]
-            for j in (i+1)..a.size-1
+            ((i+1)..a.size-1).each do |j|
                 if (a[j] <=> min_elt) < 0
                     min_elt = a[j]
                     min_idx = j
