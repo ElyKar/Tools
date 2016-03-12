@@ -9,7 +9,7 @@ class Selection
 
     # Returns a sorted copy of the array in parameter
     def self.sort(a)
-        sorted = Array.new(a)
+        sorted = a.dup
         self.sort!(sorted)
         return sorted
     end
