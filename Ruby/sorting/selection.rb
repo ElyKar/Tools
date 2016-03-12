@@ -1,7 +1,7 @@
 # Selection handles selection sort in ascendant order.
 # It provides two methods, one for sorting the array in parameter and
 # the other to return a sorted copy of the array
-# The items of the array must support the < operator
+# The items of the array must support the <=> operator
 #
 # Author:: Tristan Claverie
 # License:: MIT
@@ -20,8 +20,7 @@ class Selection
             min_idx = i
             min_elt = a[i]
             for j in (i+1)..a.size-1
-                puts i.to_s + "  " + j.to_s
-                if a[j] < min_elt
+                if (a[j] <=> min_elt) < 0
                     min_elt = a[j]
                     min_idx = j
                 end
