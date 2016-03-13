@@ -1,5 +1,5 @@
 # Shell handles shell sort in ascendant order.
-# It uses the empirical Ciura gap sequence, found by Ciura in 2001
+# It uses the Incerpi-Sedgewick gap sequence found in 1985.
 # It provides two methods, one for sorting the array in parameter and
 # the other to return a sorted copy of the array
 # The items of the array must support the <=> operator
@@ -32,7 +32,7 @@ class Shell
 
 end
 
-# ShellHalf handles shell sort in ascendant order with half exchanges
+# ShellHalf handles shell sort in ascendant order with half exchanges.
 # It uses the Incerpi-Sedgewick gap sequence found in 1985.
 # It provides two methods, one for sorting the array in parameter and
 # the other to return a sorted copy of the array
