@@ -40,10 +40,10 @@ class InsertionHalf
 
     # Sort the given array in parameter using
     # insertion sort
-    def self.sort!(a)
-        (1..a.size-1).each do |i|
+    def self.sort!(a, first = 0, last = a.size-1)
+        (first+1..last).each do |i|
             current = a[i]
-            while i-1 >= 0 and (a[i-1] <=> current) > 0
+            while i-1 >= first and (a[i-1] <=> current) > 0
                 a[i] = a[i-1]
                 i -= 1
             end
