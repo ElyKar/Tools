@@ -1,6 +1,6 @@
 # BinaryMinPQ implements a min-oriented priority queue
 # using a binary heap
-# It provides the usual insert and delMin operations
+# It provides the usual insert and del_min operations
 #
 # Author:: Tristan Claverie
 # License:: MIT
@@ -137,7 +137,7 @@ class BinaryMinPQOpti
         return k
     end
 
-    # Swim the item in position k to a higher level to restore the heap invariant
+    # Swim the item in position k to a higher level to restore the heap innvariant
     def swim(k)
         current = @pq[k]
         while k/2 >= 1 and (@pq[k/2] <=> current) > 0
