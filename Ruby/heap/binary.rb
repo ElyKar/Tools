@@ -137,7 +137,7 @@ class BinaryMinPQOpti
         return k
     end
 
-    # Swim the item in position k to a higher level to restore the heap innvariant
+    # Swim the item in position k to a higher level to restore the heap invariant
     def swim(k)
         current = @pq[k]
         while k/2 >= 1 and (@pq[k/2] <=> current) > 0
