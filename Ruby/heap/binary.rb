@@ -108,7 +108,7 @@ class BinaryMinPQOpti
     end
 
     # Deletes and returns the min element
-    def delMin
+    def del_min
         raise 'No such element' if @size < 1
         min = @pq[1]
         @pq[@size], @pq[1] = @pq[1], @pq[@size]
