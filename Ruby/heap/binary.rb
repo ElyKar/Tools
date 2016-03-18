@@ -28,7 +28,7 @@ class BinaryMinPQ
     end
 
     # Deletes and returns the min element of the heap
-    def delMin
+    def del_min
         raise 'No such element' if @size < 1
         min = @pq[1]
         @pq[@size], @pq[1] = @pq[1], @pq[@size]
