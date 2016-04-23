@@ -95,7 +95,7 @@ class PairingHeap
     # And it works fine ! (if not for this damn call stack)
     def merge_pairs(x)
         old, y, z = nil, nil, nil
-        # UGLY UGLY UGLY
+        # UGLY
         while x
             y = x.right.right if x.right
             z = meld_roots(x, x.right)
@@ -105,6 +105,7 @@ class PairingHeap
             x = y
         end
 
+        # EVEN MORE UGLY
         @head = nil
         while old
             y = old.right
@@ -112,6 +113,7 @@ class PairingHeap
             old = y
         end
     end
+
     # Assuming x holds a lower value than y,
     # links y to x
     def link(x, y)
@@ -120,16 +122,3 @@ class PairingHeap
         return x
     end
 end
-
-p = PairingHeap.new
-p.insert 5
-p.insert 3
-p.insert 7
-p.insert 0
-p.insert 9
-
-puts p.del_min
-puts p.del_min
-puts p.del_min
-puts p.del_min
-puts p.del_min
