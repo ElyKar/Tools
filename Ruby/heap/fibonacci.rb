@@ -1,6 +1,6 @@
 # FiboNode holds information about
 # a node in a fibonacci heap
-# It uses a trhee pointers representation
+# It uses a three pointers representation
 #
 # Author:: Tristan Claverie
 # License:: MIT
