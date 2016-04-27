@@ -24,6 +24,8 @@ end
 # and therefore should not be used in any
 # real application. Its aim is PURELY educative
 #
+# It supports the put, get, remove, contains and size
+# operations
 #
 # Author:: Tristan Claverie
 # License:: MIT
@@ -136,6 +138,8 @@ end
 # and therefore should not be used in any
 # real application. Its aim is PURELY educative
 #
+# It supports the put, get, remove, contains
+# and size operations
 #
 # Author:: Tristan Claverie
 # License:: MIT
@@ -196,5 +200,59 @@ class ListSTX
             current = current.right
         end
         current
+    end    
+end
+
+# ListSTFinger is another implementation of a symbol
+# table using a list and finger search
+# This implementation is highly inefficient,
+# and therefore should not be used in any
+# real application. Its aim is PURELY educative
+#
+# It supports the put, get, remove, contains
+# and size operations
+#
+# Author:: Tristan Claverie
+# License:: MIT
+class ListSTFinger < ListSTX
+    # Size is the number of elements contained in the symbol table
+    attr_reader :size
+
+    # Initializes an empty symbol table
+    def initialize
+        @head = STCmpNode.min_node
+        @head.right = STCmpNode.max_node
+        @head.right.left = @head
+        @finger = @head
+        @size = 0
+    end    
+    
+    # Deletes entry associated to key
+    def remove(key)
+        node = search(STCmpNode.new(key))
+        return if (key <=> node.key) != 0
+        node.right.left = node.left
+        node.left.right = node.right
+        @finger = node.left
+        @size -= 1
+    end
+
+    private
+
+    # Search returns the node containing specified key
+    # If not found, returns the last node inferior to it instead
+    # (the left node that is)
+    # Implemented using finger search
+    def search(node)
+        if (@finger.right <=> node) <= 0
+            while (@finger.right <=> node) <= 0
+                @finger = @finger.right
+            end
+        else
+            while (@finger <=> node) > 0
+                @finger = @finger.left
+            end
+        end
+        @finger
     end    
 end
