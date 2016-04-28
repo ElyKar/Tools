@@ -37,16 +37,22 @@ class ListST
     def initialize
         @size = 0
         @head = nil
+        @tail = nil
     end
 
+    # Put a couple key-value inside the table
     def put(key, value)
         node = STNode.new(key, value)
         if !@head
-            @head = node
+            @head, @tail = node, node
         elsif (@head.key <=> key) > 0
             @head.left = node
             node.right = @head
             @head = node
+        elsif (@tail.key <=> key) < 0
+            @tail.right = node
+            node.left = @tail
+            @tail = node
         else
             left = search(key)
             if (left.key <=> key) == 0
@@ -62,13 +68,14 @@ class ListST
     end
 
     # Deletes entry associated to key
-    def remove(key)
+    def delete(key)
         return if !@head
         node = search(key)
         return if (node.key <=> key) != 0
         node.right.left = node.left if node.right
         node.left.right = node.right if node.left
         @head = node.right if @head == node
+        @tail = node.left if @tail == node
         @size -= 1
     end
 
@@ -80,6 +87,50 @@ class ListST
         ((node.key <=> key) == 0) ? node.value : nil
     end
 
+    # Get the largest key in the table
+    def max
+        return nil if not @tail
+        return @tail.key
+    end
+
+    # Get the lowest key in the table
+    def min
+        return nil if not @head
+        return @head.key
+    end
+
+    # Deletes the smallest key
+    def del_min
+        return if not @head
+        @tail = nil if @tail == @head
+        @head = @head.right
+        @head.left = nil if @head
+        @size -= 1
+    end
+
+    # Deletes the largest key
+    def del_max
+        return if not @tail
+        @head = nil if @tail == @head
+        @tail = @tail.left
+        @tail.right = nil if @tail
+        @size -= 1
+    end
+
+    # Get the largest key smaller or equal to the given key
+    def floor(key)
+        return nil if not @head or (key <=> @head.key) < 0
+        return search(key)
+    end
+
+    # Get the smallest key larger or equal to the given key
+    def ceil(key)
+        return nil if not @head or (key <=> @head.key) > 0
+        node = search(key)
+        return node if (node.key <=> key) == 0
+        return node.right
+    end
+
     # Does the symbol table contains this key ?
     def contains?(key)
         return false if !@head
@@ -89,6 +140,33 @@ class ListST
     # Is the table empty
     def empty?
         @size == 0
+    end
+
+    # Iterate through the keys
+    def each_key
+        current = @head
+        while current
+            yield current.key
+            current = current.right
+        end
+    end
+
+    # Iterate through the values
+    def each_value
+        current = @head
+        while current
+            yield current.value
+            current = current.right
+        end
+    end
+
+    # Iterate through the couples
+    def each
+        current = @head
+        while current
+            yield current.key, current.value
+            current = current.right
+        end
     end
 
     private
@@ -113,7 +191,9 @@ end
 # License:: MIT
 class STCmpNode < STNode
 
+    # Represents min_infinity, the smallest possible value
     @@MIN_INFINITY = STCmpNode.new
+    # Represents max_infinity, the largest possible value
     @@MAX_INFINITY = STCmpNode.new
 
     # Access the max infinity node
@@ -155,8 +235,9 @@ class ListSTX
     # Initializes an empty symbol table
     def initialize
         @head = STCmpNode.min_node
-        @head.right = STCmpNode.max_node
-        @head.right.left = @head
+        @tail = STCmpNode.max_node
+        @head.right = @tail
+        @tail.left = @head
         @size = 0
     end
 
@@ -181,12 +262,49 @@ class ListSTX
     end
 
     # Deletes entry associated to key
-    def remove(key)
+    def delete(key)
         node = search(STCmpNode.new(key))
         return if (key <=> node.key) != 0
         node.right.left = node.left
         node.left.right = node.right
         @size -= 1
+    end
+
+    # Get the smallest key
+    def max
+        @tail.left != @head ? @tail.left.key : nil
+    end
+
+    # Get the largest key
+    def min
+        @head.right != @tail ? @head.right.key : nil
+    end
+
+    # Deletes the minimum key in the table
+    def del_min
+        return if @tail.left == @head
+        @tail.left.left.right = @tail
+        @tail.left = @tail.left.left
+        @size -= 1
+    end
+
+    # Deletes the largest key in the table
+    def del_max
+        return if @head.right == @tail
+        @head.right.right.left = @head
+        @head.right = @head.right.right
+        @size -= 1
+    end
+
+    # Get the largest key smaller or equal to the given key
+    def floor(key)
+        return search(STCmpNode.new(key)).key
+    end
+
+    # Get the smallest key larger or equal to the given key
+    def ceil(key)
+        node = search(STCmpNode.new(key))
+        (node.key <=> key) == 0 ? key : node.right.key
     end
 
     # Does the symbol table contains key
@@ -197,6 +315,33 @@ class ListSTX
     # Is the table empty
     def empty?
         @size == 0
+    end
+
+    # Iterates through the keys
+    def each_key
+        current = @head.right
+        while current != @tail
+            yield current.key
+            current = current.right
+        end
+    end
+
+    # Iterates through the values
+    def each_value
+        current = @head.right
+        while current != @tail
+            yield current.value
+            current = current.right
+        end
+    end
+
+    # Iterates through the couples
+    def each_key
+        current = @head.right
+        while current != @tail
+            yield current.key, current.value
+            current = current.right
+        end
     end
 
     private
@@ -238,7 +383,7 @@ class ListSTFinger < ListSTX
     end
 
     # Deletes entry associated to key
-    def remove(key)
+    def delete(key)
         node = search(STCmpNode.new(key))
         return if (key <=> node.key) != 0
         node.right.left = node.left
