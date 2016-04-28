@@ -16,7 +16,7 @@ class STNode
         @value = value
         @left = left
         @right = right
-    end    
+    end
 end
 
 # A symbol table represented using a list
@@ -37,7 +37,7 @@ class ListST
     def initialize
         @size = 0
         @head = nil
-    end    
+    end
 
     def put(key, value)
         node = STNode.new(key, value)
@@ -47,17 +47,17 @@ class ListST
             @head.left = node
             node.right = @head
             @head = node
-        else    
+        else
             left = search(key)
             if (left.key <=> key) == 0
                 left.value = value
-            else    
+            else
                 left.right.left = node if left.right
                 node.right = left.right
                 node.left = left
                 left.right = node
-            end    
-        end    
+            end
+        end
         @size += 1
     end
 
@@ -84,8 +84,13 @@ class ListST
     def contains?(key)
         return false if !@head
         (search(key).key <=> key) == 0
-    end    
-    
+    end
+
+    # Is the table empty
+    def empty?
+        @size == 0
+    end
+
     private
 
     # Search returns the node containing specified key
@@ -98,12 +103,12 @@ class ListST
         end
         return current
     end
-end    
+end
 
 # STCmpNode extends the basic node to allow
 # direct comparison between nodes instead of
 # comparing the keys
-# 
+#
 # Author:: Tristan Claverie
 # License:: MIT
 class STCmpNode < STNode
@@ -153,7 +158,7 @@ class ListSTX
         @head.right = STCmpNode.max_node
         @head.right.left = @head
         @size = 0
-    end    
+    end
 
     # Put a key-value couple in the symbol table
     def put(key, value)
@@ -174,7 +179,7 @@ class ListSTX
         node = search(STCmpNode.new(key))
         (!node.left or !node.right) ? nil : node.value
     end
-    
+
     # Deletes entry associated to key
     def remove(key)
         node = search(STCmpNode.new(key))
@@ -187,7 +192,12 @@ class ListSTX
     # Does the symbol table contains key
     def contains?(key)
         (key <=> search(STCmpNode.new(key))) == 0
-    end    
+    end
+
+    # Is the table empty
+    def empty?
+        @size == 0
+    end
 
     private
 
@@ -200,7 +210,7 @@ class ListSTX
             current = current.right
         end
         current
-    end    
+    end
 end
 
 # ListSTFinger is another implementation of a symbol
@@ -225,8 +235,8 @@ class ListSTFinger < ListSTX
         @head.right.left = @head
         @finger = @head
         @size = 0
-    end    
-    
+    end
+
     # Deletes entry associated to key
     def remove(key)
         node = search(STCmpNode.new(key))
@@ -254,5 +264,5 @@ class ListSTFinger < ListSTX
             end
         end
         @finger
-    end    
+    end
 end
