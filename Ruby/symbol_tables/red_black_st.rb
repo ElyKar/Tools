@@ -131,6 +131,42 @@ class LeftLeaningRedBlackTreeST
         search(@root, key) != nil
     end
 
+    # Iterate through the keys
+    def each_key
+        return if not @root
+        stack, x = [@root], nil
+        while not stack.empty?
+            x = stack.pop
+            yield x.key
+            stack << x.right if x.right
+            stack << x.left if x.left
+        end
+    end
+
+    # Iterate through the values
+    def each_key
+        return if not @root
+        stack, x = [@root], nil
+        while not stack.empty?
+            x = stack.pop
+            yield x.value
+            stack << x.right if x.right
+            stack << x.left if x.left
+        end
+    end
+
+    # Iterate through the couples
+    def each
+        return if not @root
+        stack, x = [@root], nil
+        while not stack.empty?
+            x = stack.pop
+            yield x.key, x.value
+            stack << x.right if x.right
+            stack << x.left if x.left
+        end
+    end
+
     private
 
     # Helper for searching the node containing key
