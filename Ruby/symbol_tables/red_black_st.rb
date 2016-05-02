@@ -364,13 +364,6 @@ class RBNode
         @childs = [nil, nil]
     end
 
-    def to_s
-        col = @color ? "R" : "B"
-        left = @childs[0] ? @childs[0].to_s : ""
-        right = @childs[1] ? @childs[1].to_s : ""
-        return @key.to_s + ":" + @value.to_s + ":" + col + "[" + left + "," + right + "]"
-    end
-
     # Get the value of red color
     def self.red
         @@RED
@@ -420,11 +413,6 @@ class RedBlackTreeST
     def initialize
         @size = 0
         @root = nil
-    end
-
-    def to_s
-        return "" if not @root
-        return @root.to_s
     end
 
     # Put a couple key-value in the table
@@ -528,44 +516,6 @@ class RedBlackTreeST
             yield x.key, x.value
             stack << x.right if x.right
             stack << x.left if x.left
-        end
-    end
-
-    def assert(root = @root)
-
-        return 1 if not root
-
-        ln = root.childs[0]
-        rn = root.childs[1]
-
-        # Consecutive red links */
-        if (red?(root))
-            if (red?(ln) || red?(rn))
-                puts("Red violation")
-                return 0
-            end
-        end
-
-        lh = assert(ln)
-        rh = assert(rn)
-
-        # Invalid binary search tree */
-        if ((ln && ln.key >= root.key) || (rn && rn.key <= root.key))
-            puts("Binary tree violation")
-            return 0
-        end
-
-        # Black height mismatch */
-        if (lh != 0 && rh != 0 && lh != rh)
-            puts("Black violation")
-            return 0
-        end
-
-        # Only count black links */
-        if (lh != 0 && rh != 0)
-            return red?(root) ? lh : lh + 1
-        else
-            return 0
         end
     end
 
