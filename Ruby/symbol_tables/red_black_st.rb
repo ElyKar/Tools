@@ -364,6 +364,13 @@ class RBNode
         @childs = [nil, nil]
     end
 
+    def to_s
+        col = @color ? "R" : "B"
+        left = @childs[0] ? @childs[0].to_s : ""
+        right = @childs[1] ? @childs[1].to_s : ""
+        return @key.to_s + ":" + @value.to_s + ":" + col + "[" + left + "," + right + "]"
+    end
+
     # Get the value of red color
     def self.red
         @@RED
@@ -415,6 +422,11 @@ class RedBlackTreeST
         @root = nil
     end
 
+    def to_s
+        return "" if not @root
+        return @root.to_s
+    end
+
     # Put a couple key-value in the table
     def put(key, value)
         @root = insert(@root, key, value)
@@ -424,7 +436,7 @@ class RedBlackTreeST
 
     # Delete key from the table
     def delete(key)
-        @root.color = RBNode.red if @root
+        @root.color = RBNode.red if @root and not red?(@root.childs[0]) and not red?(@root.childs[1])
         @root = delete_h(@root, key)
         @root.color = RBNode.black if @root
         @size -= 1
@@ -519,6 +531,44 @@ class RedBlackTreeST
         end
     end
 
+    def assert(root = @root)
+
+        return 1 if not root
+
+        ln = root.childs[0]
+        rn = root.childs[1]
+
+        # Consecutive red links */
+        if (red?(root))
+            if (red?(ln) || red?(rn))
+                puts("Red violation")
+                return 0
+            end
+        end
+
+        lh = assert(ln)
+        rh = assert(rn)
+
+        # Invalid binary search tree */
+        if ((ln && ln.key >= root.key) || (rn && rn.key <= root.key))
+            puts("Binary tree violation")
+            return 0
+        end
+
+        # Black height mismatch */
+        if (lh != 0 && rh != 0 && lh != rh)
+            puts("Black violation")
+            return 0
+        end
+
+        # Only count black links */
+        if (lh != 0 && rh != 0)
+            return red?(root) ? lh : lh + 1
+        else
+            return 0
+        end
+    end
+
     private
 
     # Helper for inserting into the tree
@@ -547,27 +597,41 @@ class RedBlackTreeST
         return nil if not node
         cmp = key <=> node.key
         if cmp == 0
-            return node.childs[0] if not node.childs[1]
+            return blacken(node.childs[0]) if not node.childs[1]
             x = min_node(node.childs[1])
             node.key, node.value = x.key, x.value
             key = node.key
         end
 
         dir = (cmp >= 0).to_i
-        if not red?(node) and not red?(node.childs[dir])
-            node = rotate_once(node, dir) if red?(node.childs[dir^1])
-        elsif not red?(node.childs[0]) and not red?(node.childs[1])
-            if node.childs[dir^1] and (red?(node.childs[dir^1].childs[dir^1]) or red?(node.childs[dir^1].childs[dir]))
-                flip_colors(node)
-                node.childs[dir^1] = rotate_once(node.childs[dir^1], dir^1) if red?(node.childs[dir^1].childs[dir])
-                node = rotate_once(node, dir)
-                flip_colors(node)
+        if not red?(node.childs[dir])
+            if red?(node.childs[dir^1])
+                node = rotate_once(node, dir) if not red?(node)
             elsif node.childs[dir] and not red?(node.childs[dir].childs[0]) and not red?(node.childs[dir].childs[1])
-                flip_colors(node)
+                if node.childs[dir^1] and (red?(node.childs[dir^1].childs[dir^1]) or red?(node.childs[dir^1].childs[dir]))
+                    rotate_del(node, dir)
+                else
+                    flip_colors(node)
+                end
             end
         end
 
         node.childs[dir] = delete_h(node.childs[dir], key)
+        return node
+    end
+
+    # Return a blackened node, or nil if no node
+    def blacken(node)
+        node.color = RBNode.black if node
+        return node
+    end
+
+    # Helper for rotations while deleting
+    def rotate_del(node, dir)
+        flip_colors(node)
+        node.childs[dir^1] = rotate_once(node.childs[dir^1], dir^1) if red?(node.childs[dir^1].childs[dir])
+        node = rotate_once(node, dir)
+        flip_colors(node)
         return node
     end
 
@@ -604,8 +668,8 @@ class RedBlackTreeST
     # Change colors of the tree and its subtrees
     def flip_colors(x)
         x.flip
-        x.childs[0] && x.childs[0].flip
-        x.childs[1] && x.childs[1].flip
+        x.childs[0].flip
+        x.childs[1].flip
     end
 
     # Ceil of the key from the given subtree
