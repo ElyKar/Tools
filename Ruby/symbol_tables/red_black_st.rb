@@ -559,7 +559,7 @@ class RedBlackTreeST
                 node = rotate_once(node, dir) if not red?(node)
             elsif node.childs[dir] and not red?(node.childs[dir].childs[0]) and not red?(node.childs[dir].childs[1])
                 if node.childs[dir^1] and (red?(node.childs[dir^1].childs[dir^1]) or red?(node.childs[dir^1].childs[dir]))
-                    rotate_del(node, dir)
+                    node = rotate_del(node, dir)
                 else
                     flip_colors(node)
                 end
