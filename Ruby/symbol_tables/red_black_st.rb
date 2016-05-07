@@ -490,8 +490,8 @@ class RedBlackTreeST
         while not stack.empty?
             x = stack.pop
             yield x.key
-            stack << x.right if x.right
-            stack << x.left if x.left
+            stack << x.childs[1] if x.childs[1]
+            stack << x.childs[0] if x.childs[0]
         end
     end
 
@@ -502,8 +502,8 @@ class RedBlackTreeST
         while not stack.empty?
             x = stack.pop
             yield x.value
-            stack << x.right if x.right
-            stack << x.left if x.left
+            stack << x.childs[1] if x.childs[1]
+            stack << x.childs[0] if x.childs[0]
         end
     end
 
@@ -514,8 +514,8 @@ class RedBlackTreeST
         while not stack.empty?
             x = stack.pop
             yield x.key, x.value
-            stack << x.right if x.right
-            stack << x.left if x.left
+            stack << x.childs[1] if x.childs[1]
+            stack << x.childs[0] if x.childs[0]
         end
     end
 
@@ -627,8 +627,8 @@ class RedBlackTreeST
         return nil if not node
         cmp = key <=> node.key
         return node if cmp == 0
-        return ceil_h(node.right, key) if cmp > 0
-        t = ceil_h(node.left, key)
+        return ceil_h(node.childs[1], key) if cmp > 0
+        t = ceil_h(node.childs[0], key)
         t ||= node
         return t.key
     end
@@ -638,8 +638,8 @@ class RedBlackTreeST
         return nil if not node
         cmp = key <=> node.key
         return node if cmp == 0
-        return floor_h(node.left, key) if cmp < 0
-        t = floor_h(node.right, key)
+        return floor_h(node.childs[0], key) if cmp < 0
+        t = floor_h(node.childs[1], key)
         t ||= node
         return t.key
     end
