@@ -4,9 +4,9 @@
 # License:: MIT
 class LLRBNode
     # RED constant  for a node
-    @@RED = true
+    RED = true
     # BLACK constant for a node
-    @@BLACK = false
+    BLACK = false
 
     # Left is the left child
     # Right is the right child
@@ -16,22 +16,12 @@ class LLRBNode
     attr_accessor :left, :right, :color, :key, :value
 
     # Initializes a new node
-    def initialize(key = nil, value = nil, color = @@RED, left = nil, right = nil)
+    def initialize(key = nil, value = nil, color = RED, left = nil, right = nil)
         @key = key
         @value = value
         @left = left
         @right = right
         @color = color
-    end
-
-    # Get the black constant
-    def self.black
-        @@BLACK
-    end
-
-    # Get the red constant
-    def self.red
-        @@RED
     end
 
     # Flip the color of the node
@@ -72,14 +62,14 @@ class LeftLeaningRedBlackTreeST
     def put(key, value)
         @size += 1
         @root = insert(@root, key, value)
-        @root.color = LLRBNode.black
+        @root.color = LLRBNode::BLACK
     end
 
     # Deletes the minimum key of the tree
     def del_min
         return if not @root
         @root = delete_min(@root)
-        @root.color = LLRBNode.black if @root
+        @root.color = LLRBNode::BLACK if @root
         @size -=1
     end
 
@@ -87,7 +77,7 @@ class LeftLeaningRedBlackTreeST
     def del_max
         return if not @root
         @root = delete_max(@root)
-        @root.color = LLRBNode.black if @root
+        @root.color = LLRBNode::BLACK if @root
         @size -= 1
     end
 
@@ -95,7 +85,7 @@ class LeftLeaningRedBlackTreeST
     def delete(key)
         return if not @root
         @root = delete_h(@root, key)
-        @root.color = LLRBNode.black if @root
+        @root.color = LLRBNode::BLACK if @root
         @size -= 1
     end
 
@@ -283,7 +273,7 @@ class LeftLeaningRedBlackTreeST
         x.left = y.right
         y.right = x
         y.color = x.color
-        x.color = LLRBNode.red
+        x.color = LLRBNode::RED
         return y
     end
 
@@ -293,7 +283,7 @@ class LeftLeaningRedBlackTreeST
         x.right = y.left
         y.left = x
         y.color = x.color
-        x.color = LLRBNode.red
+        x.color = LLRBNode::RED
         return y
     end
 
@@ -352,26 +342,16 @@ class RBNode
     attr_accessor :childs, :key, :value, :color
 
     # Represents the red color
-    @@RED = true
+    RED = true
     # Represents the black color
-    @@BLACK = false
+    BLACK = false
 
     # Initializes a new node
-    def initialize(key = nil, value = nil, color = @@RED)
+    def initialize(key = nil, value = nil, color = RED)
         @key = key
         @value = value
         @color = color
         @childs = [nil, nil]
-    end
-
-    # Get the value of red color
-    def self.red
-        @@RED
-    end
-
-    # Get the value of black color
-    def self.black
-        @@BLACK
     end
 
     # Changes the color of the node
@@ -418,15 +398,15 @@ class RedBlackTreeST
     # Put a couple key-value in the table
     def put(key, value)
         @root = insert(@root, key, value)
-        @root.color = RBNode.black
+        @root.color = RBNode::BLACK
         @size += 1
     end
 
     # Delete key from the table
     def delete(key)
-        @root.color = RBNode.red if @root and not red?(@root.childs[0]) and not red?(@root.childs[1])
+        @root.color = RBNode::RED if @root and not red?(@root.childs[0]) and not red?(@root.childs[1])
         @root = delete_h(@root, key)
-        @root.color = RBNode.black if @root
+        @root.color = RBNode::BLACK if @root
         @size -= 1
     end
 
@@ -572,7 +552,7 @@ class RedBlackTreeST
 
     # Return a blackened node, or nil if no node
     def blacken(node)
-        node.color = RBNode.black if node
+        node.color = RBNode::BLACK if node
         return node
     end
 
@@ -611,7 +591,7 @@ class RedBlackTreeST
         x.childs[dir^1] = y.childs[dir]
         y.childs[dir] = x
         y.color = x.color
-        x.color = RBNode.red
+        x.color = RBNode::RED
         return y
     end
 
