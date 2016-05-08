@@ -1,7 +1,8 @@
-# Array ST implements a simple symbol
+# Array ST implements an ordered symbol
 # table using an Array.
-# It supports the usual put, get, remove,
-# contains and size operations
+# It supports the usual put, get, delete,
+# del_min, del_max, min, max, ceil, floor,
+# contains?, empty? and size operations
 #
 # Author:: Tristan Claverie
 # License:: MIT
@@ -37,6 +38,11 @@ class ArrayST
         (key <=> @keys[position]) == 0
     end
 
+    # Is the table empty ?
+    def empty?
+        size == 0
+    end
+
     # Get value associated to key
     def get(key)
         position = search(key)
@@ -45,11 +51,51 @@ class ArrayST
     end
 
     # Remove couple containing key from the table
-    def remove(key)
+    def delete(key)
         position = search(key)
         return if (key <=> @keys[position]) != 0
         @keys.delete_at(position)
         @values.delete_at(position)
+    end
+
+    # Min key in the table
+    def min
+        @keys[0]
+    end
+
+    # Max key in the table
+    def max
+        @keys[@keys.size-1]
+    end
+
+    # Delete the minimum key of the table
+    def del_min
+        return if @keys.size == 0
+        @keys.delete_at(0)
+        @values.delete_at(0)
+    end
+
+    # Delete the maximum key of the table
+    def del_max
+        return if @keys.size == 0
+        @key.delete_at(@keys.size-1)
+        @values.delete_at(@keys.size-1)
+    end
+
+    # Get the largest key smaller of equal to key
+    def floor(key)
+        position = search(key)
+        return key if key == @keys[position]
+        return nil if position == 0
+        return @keys[position-1]
+    end
+
+    # Get the smallest key larger of equal to key
+    def ceil(key)
+        position = search(key)
+        return key if key == @keys[position]
+        return nil if position == @keys.size
+        return @keys[position]
     end
 
     # Is the table empty
