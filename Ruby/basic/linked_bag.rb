@@ -1,22 +1,5 @@
-# The SingleNode is the Node for several Linked structures
-#
-# Author:: Tristan Claverie
-# License:: MIT License
-class SingleNode
-    # Value contained in the Node
-    attr_reader :value
-    # Next Node
-    attr_reader :next
-
-    # Create a Node with value and next Node n
-    def initialize(value, n)
-        @value = value
-        @next = n
-    end
-end
-
 # The LinkedBag represents a one-way linked list.
-# 
+#
 # It supports the usual add and each operation.
 #
 # Author:: Tristan Claverie
@@ -40,7 +23,7 @@ class LinkedBag
 
     # Add value to the bag
     def add(value)
-        @root = SingleNode.new(value, @root)
+        @root = Node.new(value, @root)
         @size += 1
     end
 
@@ -50,6 +33,25 @@ class LinkedBag
         while node != nil
             yield node.value
             node = node.next
+        end
+    end
+
+    private
+
+    # The Node for the LinkedBag structure
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT License
+    class Node
+        # Value contained in the Node
+        attr_reader :value
+        # Next Node
+        attr_reader :next
+
+        # Create a Node with value and next Node n
+        def initialize(value, n)
+            @value = value
+            @next = n
         end
     end
 

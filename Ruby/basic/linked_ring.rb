@@ -1,5 +1,3 @@
-require_relative('linked_queue')
-
 # LinkedRing represents a cirular linked list.
 #
 # It supports the insertion, deletion and movement in the list.
@@ -22,8 +20,8 @@ class LinkedRing
 
     # Add an element before the current node, does not
     # change the current element
-    def insertBefore(elt)
-        node = DoubleNode.new(elt, nil, nil)
+    def insert_before(elt)
+        node = Node.new(elt, nil, nil)
         if @size == 0 then
             node.next, node.previous = node, node
             @current = node
@@ -38,8 +36,8 @@ class LinkedRing
 
     # Add an element after the current node, does not
     # change the current element
-    def insertAfter(elt)
-        node = DoubleNode.new(elt, nil, nil)
+    def insert_after(elt)
+        node = Node.new(elt, nil, nil)
         if @size == 0 then
             node.next, node.previous = node, node
             @current = node
@@ -104,4 +102,29 @@ class LinkedRing
         end
     end
 
+    private
+
+    # The Node class represents a doubly linked node.
+    #
+    # It holds one link for the previous Node and one for the next.
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT
+    class Node
+        # Value contained in the node
+        attr_accessor :value
+        # Next node
+        attr_accessor :next
+        # Previous node
+        attr_accessor :previous
+
+        # Initialize a node with value v, previous p and next n
+        def initialize(v, n, p)
+            @value = v
+            @next = n
+            @previous = p
+        end
+    end
+
 end
+

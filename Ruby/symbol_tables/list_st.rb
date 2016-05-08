@@ -1,24 +1,3 @@
-# STNode represents a Node of the symbol
-# table
-#
-# Author:: Tristan Claverie
-# License:: MIT
-class STNode
-    # Left is the left neighbor of this Node
-    # Right is the right neighbor of this node
-    # Key is the key of this Node
-    # Value is the value contained in this Node
-    attr_accessor :left, :right, :key, :value
-
-    # Initialize a new node
-    def initialize(key = nil, value = nil, left = nil, right = nil)
-        @key = key
-        @value = value
-        @left = left
-        @right = right
-    end
-end
-
 # A symbol table represented using a list
 # This implementation is highly inefficient,
 # and therefore should not be used in any
@@ -42,7 +21,7 @@ class ListST
 
     # Put a couple key-value inside the table
     def put(key, value)
-        node = STNode.new(key, value)
+        node = Node.new(key, value)
         if !@head
             @head, @tail = node, node
         elsif (@head.key <=> key) > 0
@@ -181,40 +160,28 @@ class ListST
         end
         return current
     end
-end
 
-# STCmpNode extends the basic node to allow
-# direct comparison between nodes instead of
-# comparing the keys
-#
-# Author:: Tristan Claverie
-# License:: MIT
-class STCmpNode < STNode
+    # Node represents a Node of the symbol
+    # table
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT
+    class Node
+        # Left is the left neighbor of this Node
+        # Right is the right neighbor of this node
+        # Key is the key of this Node
+        # Value is the value contained in this Node
+        attr_accessor :left, :right, :key, :value
 
-    # Represents min_infinity, the smallest possible value
-    @@MIN_INFINITY = STCmpNode.new
-    # Represents max_infinity, the largest possible value
-    @@MAX_INFINITY = STCmpNode.new
-
-    # Access the max infinity node
-    def self.max_node
-        @@MAX_INFINITY
+        # Initialize a new node
+        def initialize(key = nil, value = nil, left = nil, right = nil)
+            @key = key
+            @value = value
+            @left = left
+            @right = right
+        end
     end
 
-    # Access the min infinity node
-    def self.min_node
-        @@MIN_INFINITY
-    end
-
-    # Define a comparison operator for
-    # handling +inf and -inf
-    def <=>(other)
-        return -1 if self == @@MIN_INFINITY
-        return 1 if other == @@MIN_INFINITY
-        return 1 if self == @@MAX_INFINITY
-        return -1 if other == @@MAX_INFINITY
-        return self.key <=> other.key
-    end
 end
 
 # ListSTX is another implementation of a symbol
@@ -234,8 +201,8 @@ class ListSTX
 
     # Initializes an empty symbol table
     def initialize
-        @head = STCmpNode.min_node
-        @tail = STCmpNode.max_node
+        @head = Node.min_node
+        @tail = Node.max_node
         @head.right = @tail
         @tail.left = @head
         @size = 0
@@ -243,7 +210,7 @@ class ListSTX
 
     # Put a key-value couple in the symbol table
     def put(key, value)
-        node = STCmpNode.new(key, value)
+        node = Node.new(key, value)
         left = search(node)
         if (left <=> node) == 0
             left.value = value
@@ -257,13 +224,13 @@ class ListSTX
 
     # Get value associated to key
     def get(key)
-        node = search(STCmpNode.new(key))
+        node = search(Node.new(key))
         (!node.left or !node.right) ? nil : node.value
     end
 
     # Deletes entry associated to key
     def delete(key)
-        node = search(STCmpNode.new(key))
+        node = search(Node.new(key))
         return if (key <=> node.key) != 0
         node.right.left = node.left
         node.left.right = node.right
@@ -298,18 +265,18 @@ class ListSTX
 
     # Get the largest key smaller or equal to the given key
     def floor(key)
-        return search(STCmpNode.new(key)).key
+        return search(Node.new(key)).key
     end
 
     # Get the smallest key larger or equal to the given key
     def ceil(key)
-        node = search(STCmpNode.new(key))
+        node = search(Node.new(key))
         (node.key <=> key) == 0 ? key : node.right.key
     end
 
     # Does the symbol table contains key
     def contains?(key)
-        (key <=> search(STCmpNode.new(key))) == 0
+        (key <=> search(Node.new(key))) == 0
     end
 
     # Is the table empty
@@ -356,6 +323,57 @@ class ListSTX
         end
         current
     end
+
+    protected
+
+    # Node extends the basic node to allow
+    # direct comparison between nodes instead of
+    # comparing the keys
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT
+    class Node
+
+        # Represents min_infinity, the smallest possible value
+        @@MIN_INFINITY = Node.new
+        # Represents max_infinity, the largest possible value
+        @@MAX_INFINITY = Node.new
+
+        # Left is the left neighbor of this Node
+        # Right is the right neighbor of this node
+        # Key is the key of this Node
+        # Value is the value contained in this Node
+        attr_accessor :left, :right, :key, :value
+
+        # Initialize a new node
+        def initialize(key = nil, value = nil, left = nil, right = nil)
+            @key = key
+            @value = value
+            @left = left
+            @right = right
+        end
+
+        # Access the max infinity node
+        def self.max_node
+            @@MAX_INFINITY
+        end
+
+        # Access the min infinity node
+        def self.min_node
+            @@MIN_INFINITY
+        end
+
+        # Define a comparison operator for
+        # handling +inf and -inf
+        def <=>(other)
+            return -1 if self == @@MIN_INFINITY
+            return 1 if other == @@MIN_INFINITY
+            return 1 if self == @@MAX_INFINITY
+            return -1 if other == @@MAX_INFINITY
+            return self.key <=> other.key
+        end
+    end
+
 end
 
 # ListSTFinger is another implementation of a symbol
@@ -375,8 +393,8 @@ class ListSTFinger < ListSTX
 
     # Initializes an empty symbol table
     def initialize
-        @head = STCmpNode.min_node
-        @head.right = STCmpNode.max_node
+        @head = Node.min_node
+        @head.right = Node.max_node
         @head.right.left = @head
         @finger = @head
         @size = 0
@@ -384,7 +402,7 @@ class ListSTFinger < ListSTX
 
     # Deletes entry associated to key
     def delete(key)
-        node = search(STCmpNode.new(key))
+        node = search(Node.new(key))
         return if (key <=> node.key) != 0
         node.right.left = node.left
         node.left.right = node.right

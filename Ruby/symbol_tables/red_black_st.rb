@@ -1,35 +1,3 @@
-# A node of a left-leaning black BST
-#
-# Author:: Tristan Claverie
-# License:: MIT
-class LLRBNode
-    # RED constant  for a node
-    RED = true
-    # BLACK constant for a node
-    BLACK = false
-
-    # Left is the left child
-    # Right is the right child
-    # Color is the color of the parent link of the node
-    # Key is the key of this node
-    # Value is the value of this node
-    attr_accessor :left, :right, :color, :key, :value
-
-    # Initializes a new node
-    def initialize(key = nil, value = nil, color = RED, left = nil, right = nil)
-        @key = key
-        @value = value
-        @left = left
-        @right = right
-        @color = color
-    end
-
-    # Flip the color of the node
-    def flip
-        @color = !@color
-    end
-end
-
 # Represents a left-leaning red-black BST
 # This is a variation of the classical red-black
 # BST introduced by Sedgewick in 2008. Its aim is to
@@ -62,14 +30,14 @@ class LeftLeaningRedBlackTreeST
     def put(key, value)
         @size += 1
         @root = insert(@root, key, value)
-        @root.color = LLRBNode::BLACK
+        @root.color = Node::BLACK
     end
 
     # Deletes the minimum key of the tree
     def del_min
         return if not @root
         @root = delete_min(@root)
-        @root.color = LLRBNode::BLACK if @root
+        @root.color = Node::BLACK if @root
         @size -=1
     end
 
@@ -77,7 +45,7 @@ class LeftLeaningRedBlackTreeST
     def del_max
         return if not @root
         @root = delete_max(@root)
-        @root.color = LLRBNode::BLACK if @root
+        @root.color = Node::BLACK if @root
         @size -= 1
     end
 
@@ -85,7 +53,7 @@ class LeftLeaningRedBlackTreeST
     def delete(key)
         return if not @root
         @root = delete_h(@root, key)
-        @root.color = LLRBNode::BLACK if @root
+        @root.color = Node::BLACK if @root
         @size -= 1
     end
 
@@ -170,7 +138,7 @@ class LeftLeaningRedBlackTreeST
 
     # Helper for inserting a couple in the tree
     def insert(node, key, value)
-        return LLRBNode.new(key, value) if not node
+        return Node.new(key, value) if not node
 
         cmp = key <=> node.key
         node.value = value if cmp == 0
@@ -273,7 +241,7 @@ class LeftLeaningRedBlackTreeST
         x.left = y.right
         y.right = x
         y.color = x.color
-        x.color = LLRBNode::RED
+        x.color = Node::RED
         return y
     end
 
@@ -283,7 +251,7 @@ class LeftLeaningRedBlackTreeST
         x.right = y.left
         y.left = x
         y.color = x.color
-        x.color = LLRBNode::RED
+        x.color = Node::RED
         return y
     end
 
@@ -328,36 +296,39 @@ class LeftLeaningRedBlackTreeST
         t ||= node
         return t.key
     end
-end
 
-# RBNode represents a node of a red-black bst
-#
-# Author:: Tristan Claverie
-# License:: MIT
-class RBNode
-    # Childs is an arry of the two childs of the node
-    # Key contained in the node
-    # Value contained in the node
-    # Color of the node
-    attr_accessor :childs, :key, :value, :color
+    # A node of a left-leaning black BST
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT
+    class Node
+        # RED constant  for a node
+        RED = true
+        # BLACK constant for a node
+        BLACK = false
 
-    # Represents the red color
-    RED = true
-    # Represents the black color
-    BLACK = false
+        # Left is the left child
+        # Right is the right child
+        # Color is the color of the parent link of the node
+        # Key is the key of this node
+        # Value is the value of this node
+        attr_accessor :left, :right, :color, :key, :value
 
-    # Initializes a new node
-    def initialize(key = nil, value = nil, color = RED)
-        @key = key
-        @value = value
-        @color = color
-        @childs = [nil, nil]
+        # Initializes a new node
+        def initialize(key = nil, value = nil, color = RED, left = nil, right = nil)
+            @key = key
+            @value = value
+            @left = left
+            @right = right
+            @color = color
+        end
+
+        # Flip the color of the node
+        def flip
+            @color = !@color
+        end
     end
 
-    # Changes the color of the node
-    def flip
-        @color = !@color
-    end
 end
 
 # We define the to_i methods for booleans in order to reduce the number of lines.
@@ -398,15 +369,15 @@ class RedBlackTreeST
     # Put a couple key-value in the table
     def put(key, value)
         @root = insert(@root, key, value)
-        @root.color = RBNode::BLACK
+        @root.color = Node::BLACK
         @size += 1
     end
 
     # Delete key from the table
     def delete(key)
-        @root.color = RBNode::RED if @root and not red?(@root.childs[0]) and not red?(@root.childs[1])
+        @root.color = Node::RED if @root and not red?(@root.childs[0]) and not red?(@root.childs[1])
         @root = delete_h(@root, key)
-        @root.color = RBNode::BLACK if @root
+        @root.color = Node::BLACK if @root
         @size -= 1
     end
 
@@ -503,7 +474,7 @@ class RedBlackTreeST
 
     # Helper for inserting into the tree
     def insert(node, key, value)
-        return RBNode.new(key, value) if not node
+        return Node.new(key, value) if not node
         cmp = key <=> node.key
         if cmp == 0
             node.value = value
@@ -552,7 +523,7 @@ class RedBlackTreeST
 
     # Return a blackened node, or nil if no node
     def blacken(node)
-        node.color = RBNode::BLACK if node
+        node.color = Node::BLACK if node
         return node
     end
 
@@ -591,7 +562,7 @@ class RedBlackTreeST
         x.childs[dir^1] = y.childs[dir]
         y.childs[dir] = x
         y.color = x.color
-        x.color = RBNode::RED
+        x.color = Node::RED
         return y
     end
 
@@ -628,4 +599,35 @@ class RedBlackTreeST
     def red?(x)
         x and x.color
     end
+
+    # Node represents a node of a red-black bst
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT
+    class Node
+        # Childs is an arry of the two childs of the node
+        # Key contained in the node
+        # Value contained in the node
+        # Color of the node
+        attr_accessor :childs, :key, :value, :color
+
+        # Represents the red color
+        RED = true
+        # Represents the black color
+        BLACK = false
+
+        # Initializes a new node
+        def initialize(key = nil, value = nil, color = RED)
+            @key = key
+            @value = value
+            @color = color
+            @childs = [nil, nil]
+        end
+
+        # Changes the color of the node
+        def flip
+            @color = !@color
+        end
+    end
+
 end

@@ -1,8 +1,6 @@
-require_relative('linked_queue')
-
 # LinkedDeque represents a dequeue using a doubly-linked list.
 #
-# It supports the addFirst, addLast, removeFirst, and removeLast operations.
+# It supports the add-first, add-last, remove-first, and remove-last operations.
 #
 # Iteration via each is done from first element to the last.
 #
@@ -22,8 +20,8 @@ class LinkedDeque
     end
 
     # Add an element at the head of the deque
-    def addFirst(elt)
-        @head = DoubleNode.new(elt, @head, nil)
+    def add_first(elt)
+        @head = Node.new(elt, @head, nil)
         if @size == 0
             @tail = @head
         else
@@ -33,8 +31,8 @@ class LinkedDeque
     end
 
     # Add an element at the end of the deque
-    def addLast(elt)
-        @tail = DoubleNode.new(elt, nil, @tail)
+    def add_last(elt)
+        @tail = Node.new(elt, nil, @tail)
         if @size == 0
             @head = @tail
         else
@@ -44,7 +42,7 @@ class LinkedDeque
     end
 
     # Remove the node at the end of the list and returns its value
-    def removeLast
+    def remove_last
         raise 'No such element' if @size == 0
         elt = @tail.value
         if @size == 1
@@ -60,7 +58,7 @@ class LinkedDeque
     end
 
     # Remove the node at the head of the list and returns its value
-    def removeFirst
+    def remove_first
         raise 'No such element' if @size == 0
         elt = @head.value
         if @size == 1
@@ -76,13 +74,13 @@ class LinkedDeque
     end
 
     # Return the first element without removing it
-    def peekFirst
+    def peek_first
         raise 'No such element' if @size == 0
         @head.value
     end
 
     # Return the last element without removing it
-    def peekLast
+    def peek_last
         raise 'No such element' if @size == 0
         @tail.value
     end
@@ -98,6 +96,30 @@ class LinkedDeque
         while current != nil
             yield current.value
             current = current.next
+        end
+    end
+
+    private
+
+    # The Node class represents a doubly linked node.
+    #
+    # It holds one link for the previous Node and one for the next.
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT
+    class Node
+        # Value contained in the node
+        attr_accessor :value
+        # Next node
+        attr_accessor :next
+        # Previous node
+        attr_accessor :previous
+
+        # Initialize a node with value v, previous p and next n
+        def initialize(v, n, p)
+            @value = v
+            @next = n
+            @previous = p
         end
     end
 

@@ -1,25 +1,3 @@
-# The DoubleNode class represents a doubly linked node.
-#
-# It holds one link for the previous Node and one for the next.
-#
-# Author:: Tristan Claverie
-# License:: MIT
-class DoubleNode
-    # Value contained in the node
-    attr_accessor :value
-    # Next node
-    attr_accessor :next
-    # Previous node
-    attr_accessor :previous
-
-    # Initialize a node with value v, previous p and next n
-    def initialize(v, n, p)
-        @value = v
-        @next = n
-        @previous = p
-    end
-end
-
 # The LinkedQueue class represents a Queue using a Linked List.
 #
 # It supports the enqueue and dequeue operations.
@@ -43,7 +21,7 @@ class LinkedQueue
 
     # Insert a node at the top of the list
     def enqueue(elt)
-        @head = DoubleNode.new(elt, @head, nil)
+        @head = Node.new(elt, @head, nil)
         if @size == 0
             @tail = @head
         else
@@ -89,4 +67,29 @@ class LinkedQueue
     def empty?
         @size == 0
     end
+
+    private
+
+    # The Node class represents a doubly linked node.
+    #
+    # It holds one link for the previous Node and one for the next.
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT
+    class Node
+        # Value contained in the node
+        attr_accessor :value
+        # Next node
+        attr_accessor :next
+        # Previous node
+        attr_accessor :previous
+
+        # Initialize a node with value v, previous p and next n
+        def initialize(v, n, p)
+            @value = v
+            @next = n
+            @previous = p
+        end
+    end
+
 end

@@ -1,25 +1,3 @@
-# AVLNode represents a node of an AVL tree
-# It contains an array of childs instead of
-# the usual left and right pointers
-#
-# Author:: Tristan Claverie
-# License:: MIT
-class AVLNode
-    # Key is the key contained in the node
-    # Value contained in the node
-    # Balance is the length of the maximum path to a leaf from this node
-    # Childs is an array of childs
-    attr_accessor :key, :value, :balance, :childs
-
-    # Initializes a new node
-    def initialize(key, value, balance)
-        @key = key
-        @value = value
-        @balance = balance
-        @childs = [nil, nil]
-    end
-end
-
 # We define the to_i methods for booleans in order to reduce the number of lines.
 # Typically, we use booleans to select the correct child in the array of childs
 class FalseClass; def to_i; 0 end end
@@ -154,7 +132,7 @@ class AVLTreeST
 
     # Helper for inserting in the table
     def insert(node, key, value)
-        return AVLNode.new(key, value, 0) if not node
+        return Node.new(key, value, 0) if not node
         cmp = key <=> node.key
 
         if cmp == 0
@@ -253,6 +231,28 @@ class AVLTreeST
     def size(x)
         return 0 if not x or (not x.childs[0] and not x.childs[1])
         return x.balance
+    end
+
+    # Node represents a node of an AVL tree
+    # It contains an array of childs instead of
+    # the usual left and right pointers
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT
+    class Node
+        # Key is the key contained in the node
+        # Value contained in the node
+        # Balance is the length of the maximum path to a leaf from this node
+        # Childs is an array of childs
+        attr_accessor :key, :value, :balance, :childs
+
+        # Initializes a new node
+        def initialize(key, value, balance)
+            @key = key
+            @value = value
+            @balance = balance
+            @childs = [nil, nil]
+        end
     end
 
 end

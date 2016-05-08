@@ -1,5 +1,3 @@
-require_relative('linked_bag')
-
 # The LinkedStack represents a simple stack using a Linked List.
 #
 # It supports the push and pop operations.
@@ -22,7 +20,7 @@ class LinkedStack
 
     # Push an element at the top of the stack
     def push(elt)
-        @head = SingleNode.new(elt, @head)
+        @head = Node.new(elt, @head)
         @size += 1
     end
 
@@ -52,6 +50,25 @@ class LinkedStack
         while current != nil
             yield current.value
             current = current.next
+        end
+    end
+
+    private
+
+    # The Node for the LinkedStack structure
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT License
+    class Node
+        # Value contained in the Node
+        attr_reader :value
+        # Next Node
+        attr_reader :next
+
+        # Create a Node with value and next Node n
+        def initialize(value, n)
+            @value = value
+            @next = n
         end
     end
 
