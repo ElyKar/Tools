@@ -1,24 +1,3 @@
-# PairingNode holds information about
-# a node in a pairing heap
-# It uses the standard left-child right-sibling
-# representation
-#
-# Author:: Tristan Claverie
-# License:: MIT
-class PairingNode
-    # Left if the first child of the node
-    # Right is the sibling oh this node
-    # Value is the value contained by this node
-    attr_accessor :left, :right, :value
-
-    # Initializes a new node
-    def initialize(value)
-        @value = value
-        @left = nil
-        @right = nil
-    end
-end
-
 # PairingHeap implements a min-oriented priority queue using
 # a pairing heap. It provides the usual insert and del_min
 # methods, plus a union one to merge (destructively !!) two heaps.
@@ -43,7 +22,7 @@ class PairingHeap
 
     # Insert a new element into the heap
     def insert(elt)
-        x = PairingNode.new(elt)
+        x = Node.new(elt)
         @head = meld_roots(@head, x)
         @size += 1
     end
@@ -121,4 +100,26 @@ class PairingHeap
         x.left = y
         return x
     end
+
+    # Node holds information about
+    # a node in a pairing heap
+    # It uses the standard left-child right-sibling
+    # representation
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT
+    class Node
+        # Left if the first child of the node
+        # Right is the sibling oh this node
+        # Value is the value contained by this node
+        attr_accessor :left, :right, :value
+
+        # Initializes a new node
+        def initialize(value)
+            @value = value
+            @left = nil
+            @right = nil
+        end
+    end
+
 end

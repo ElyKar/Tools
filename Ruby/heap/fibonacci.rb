@@ -1,26 +1,3 @@
-# FiboNode holds information about
-# a node in a fibonacci heap
-# It uses a three pointers representation
-#
-# Author:: Tristan Claverie
-# License:: MIT
-class FiboNode
-    # Left and right are for the doubly-linked list,
-    # Child pointer is the child of this node
-    # Rank is similar to that of a binomial's heap rank
-    # Value is the value contained by this node
-    attr_accessor :left, :right, :child, :value, :rank
-
-    # Initializes a node
-    def initialize(value = nil, left = nil, right = nil, child = nil)
-        @left = left
-        @right = right
-        @child = child
-        @value = value
-        @rank = 0
-    end
-end
-
 # FiboHeap implements a min-oriented priority queue using
 # a fibonacci heap. It provides the usual insert and del_min
 # methods, plus a union one to merge (destructively !!) two heaps.
@@ -47,7 +24,7 @@ class FiboHeap
 
     # Inserts a node in the heap
     def insert(elt)
-        node = FiboNode.new(elt)
+        node = Node.new(elt)
         @min = insert_list(node, @min)
         @size += 1
     end
@@ -147,6 +124,29 @@ class FiboHeap
             h[y.rank] = y
             @min = y if (y.value <=> @min.value) <= 0
             break if h[y.right.rank] == y.right
+        end
+    end
+
+    # Node holds information about
+    # a node in a fibonacci heap
+    # It uses a three pointers representation
+    #
+    # Author:: Tristan Claverie
+    # License:: MIT
+    class Node
+        # Left and right are for the doubly-linked list,
+        # Child pointer is the child of this node
+        # Rank is similar to that of a binomial's heap rank
+        # Value is the value contained by this node
+        attr_accessor :left, :right, :child, :value, :rank
+
+        # Initializes a node
+        def initialize(value = nil, left = nil, right = nil, child = nil)
+            @left = left
+            @right = right
+            @child = child
+            @value = value
+            @rank = 0
         end
     end
 
