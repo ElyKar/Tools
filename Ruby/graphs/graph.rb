@@ -307,6 +307,13 @@ class Digraph
         s
     end
 
+    # Creates the reverse graph, that is reverse all of its edges
+    def reverse
+        g = Graph.new(@v)
+        each.do { |e| g.add_edge(e.to, e.from) }
+        return g
+    end
+
     # Number of edges
     def E
         @e
