@@ -1,5 +1,5 @@
 # Use breadth-first search to perform graph traversal from a given source
-# One initialized, query it for getting data from the graph suh has paths
+# Once initialized, query it for getting data from the graph suh has paths
 #
 # Author:: Tristan Claverie
 # License:: MIT
@@ -57,14 +57,49 @@ class BreadthFirstSearch
             w = queue.delete_at(0)
             graph.adj(v).each do |edge|
                 w = edge.other(v)
-                if not @visited[edge.other(v)]
+                if not @visited[w]
                     @path[w] = v
                     @dist[w] = @dist[v] + 1
                     @visited[w] = true
-                    queue << edge.other(v)
+                    queue << w
                 end
             end
         end
     end
 
+end
+
+# Use breadth-first search to perform graph traversal from a given source
+# Once initialized, query it for getting data from the graph suh has paths
+#
+# Author:: Tristan Claverie
+# License:: MIT
+class DirectedBreadthFirstSearch < BreadthFirstSearch
+
+    # Computes bfs
+    def initialize(graph, s)
+        super(graph, s)
+    end
+
+    private
+
+    # Inner function performing the actual bfs
+    def bfs(graph, s)
+        queue = [s]
+        @visited[s] = true
+        @dist[s] = 0
+        w = nil
+        while not queue.empty?
+            w = queue.delete_at(0)
+            graph.adj(v).each do |edge|
+                w = edge.to
+                if not @visited[w]
+                    @path[w] = v
+                    @dist[w] = @dist[v] + 1
+                    @visited[w] = true
+                    queue << w
+                end
+            end
+        end
+    end
 end

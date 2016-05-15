@@ -121,3 +121,34 @@ class NRDepthFirstSearch
     end
 
 end
+
+# Use depth-first search to perform graph traversal from a given source
+# One initialized, query it for getting data from the graph suh has paths
+# The dfs method is beautiful, but should not be used for a real
+# application because it is easy to find a graph which would explode the call stack
+#
+# Author:: Tristan Claverie
+# License:: MIT
+class DirectedDepthFirstSearch < DepthFirstSearch
+
+    # Computes dfs
+    def initialize(graph, s)
+        super(graph, s)
+    end
+
+    private
+
+    # Inner function performing the actual dfs
+    def dfs(graph, v)
+        @visited[v] = true
+        w = nil
+        graph.adj(v).each do |edge|
+            w = edge.to
+            if not @visited[edge.other(v)]
+                @path[w] = v
+                dfs(graph, edge.other(v))
+            end
+        end
+    end
+
+end
