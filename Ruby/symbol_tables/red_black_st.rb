@@ -494,6 +494,12 @@ class RedBlackTreeST
     end
 
     # Helper for deleting the key from subtree rooted at node
+    # How does it work ? A bit of recursive top-down deletion.
+    # And a lot of magic.
+    #
+    # By some strange process: it works, but I would be completely
+    # unable to tell you why. So use it, share it, but do not ask
+    # questions about it.
     def delete_h(node, key)
         return nil if not node
         cmp = key <=> node.key
