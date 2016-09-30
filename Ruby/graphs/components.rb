@@ -129,9 +129,3 @@ class KosarajuSharirSC
 
 end
 
-class TarjanSC
-
-    def initialize(argument)
-        @argument = argument
-    end
-end
